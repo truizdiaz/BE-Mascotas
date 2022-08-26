@@ -54,6 +54,31 @@ namespace BE_CRUDMascotas.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var mascota = await _context.Mascotas.FindAsync(id);
+
+                if(mascota == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Mascotas.Remove(mascota);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            
+        }
+
 
     }
 }
